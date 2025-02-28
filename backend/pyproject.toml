@@ -5,7 +5,7 @@ description = "Default template for PDM package"
 authors = [
     {name = "carterwward", email = "Carter.Ward@uvm.edu"},
 ]
-dependencies = ["litestar>=2.15.1", "uvicorn>=0.34.0"]
+dependencies = ["uvicorn>=0.34.0", "spotipy>=2.25.1", "python-dotenv>=1.0.1", "litestar>=2.15.1", "cryptography>=44.0.1"]
 requires-python = "==3.11.*"
 readme = "README.md"
 license = {text = "MIT"}
@@ -16,3 +16,9 @@ distribution = false
 
 [tool.pdm.scripts]
 app = "uvicorn app:app --reload"
+
+[dependency-groups]
+dev = [
+    "black>=25.1.0",
+    "pytest>=8.3.4",
+]

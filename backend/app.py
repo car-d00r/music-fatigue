@@ -1,10 +1,11 @@
 from litestar import Litestar, get, Request, Controller
+from litestar.response import Response
 from litestar.response import Redirect
 from litestar.middleware.session import SessionMiddleware
-from litestar.middleware.session.client_side import (
-    ClientSideSessionBackend,
-    CookieBackendConfig,
+from litestar.middleware.session.server_side import (
+    ServerSideSessionBackend, ServerSideSessionConfig
 )
+from litestar.stores.memory import MemoryStore
 from dotenv import load_dotenv
 import os
 import spotipy
@@ -18,8 +19,8 @@ sp_oauth = SpotifyOAuth(
     redirect_uri=os.environ["SPOTIPY_REDIRECT_URI"],
     scope="user-library-read",  # Adjust scope as needed
 )
-config = CookieBackendConfig(secret=os.environ["SECRET_KEY"].encode())
-
+store = MemoryStore()
+config = ServerSideSessionConfig(store=store)
 
 class SpotifyController(Controller):
     path = "/spotify"
@@ -29,8 +30,7 @@ class SpotifyController(Controller):
         token_info = request.session.get("spotify_token")
 
         if not token_info:
-            raise Exception("Not authenticated")
-
+            return Response(content={'message': "Not authenticated"}, status_code=500)
         # Check if token needs refresh
         if sp_oauth.is_token_expired(token_info):
             token_info = sp_oauth.refresh_access_token(token_info["refresh_token"])
@@ -73,7 +73,7 @@ session_middleware = SessionMiddleware
 
 
 def middleware_factory(app):
-    return SessionMiddleware(app, ClientSideSessionBackend(config=config))
+    return SessionMiddleware(app, ServerSideSessionBackend(config=config))
 
 
 app = Litestar(
