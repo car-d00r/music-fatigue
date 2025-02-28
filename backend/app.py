@@ -69,9 +69,6 @@ async def set_initial_token(request: Request) -> dict[str, str]:
     return {"success": True, "message": "Authentication successful!"}
 
 
-session_middleware = SessionMiddleware
-
-
 def middleware_factory(app):
     return SessionMiddleware(app, ServerSideSessionBackend(config=config))
 
