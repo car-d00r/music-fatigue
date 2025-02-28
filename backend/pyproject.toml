@@ -5,7 +5,7 @@ description = "Default template for PDM package"
 authors = [
     {name = "carterwward", email = "Carter.Ward@uvm.edu"},
 ]
-dependencies = ["litestar>=2.15.1"]
+dependencies = ["litestar>=2.15.1", "uvicorn>=0.34.0"]
 requires-python = "==3.11.*"
 readme = "README.md"
 license = {text = "MIT"}
@@ -13,3 +13,6 @@ license = {text = "MIT"}
 
 [tool.pdm]
 distribution = false
+
+[tool.pdm.scripts]
+app = "uvicorn app:app --reload"
