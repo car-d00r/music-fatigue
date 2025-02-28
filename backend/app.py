@@ -30,7 +30,7 @@ class SpotifyController(Controller):
         token_info = request.session.get("spotify_token")
 
         if not token_info:
-            return Response(content={'message': "Not authenticated"}, status_code=500)
+            return Response(content={'message': "Not authenticated"}, status_code=401)
         # Check if token needs refresh
         if sp_oauth.is_token_expired(token_info):
             token_info = sp_oauth.refresh_access_token(token_info["refresh_token"])
