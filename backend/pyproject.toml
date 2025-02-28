@@ -5,11 +5,40 @@ description = "Default template for PDM package"
 authors = [
     {name = "carterwward", email = "Carter.Ward@uvm.edu"},
 ]
-dependencies = ["litestar>=2.15.1"]
-requires-python = "==3.11.*"
+dependencies = ["litestar>=2.15.1", "asyncpg>=0.30.0", "sqlalchemy>=2.0.38", "psycopg2>=2.9.10"]
+requires-python = ">=3.11,<3.14"
 readme = "README.md"
 license = {text = "MIT"}
 
 
+[project.optional-dependencies]
+dev = [
+    "alembic>=1.14.1",
+]
 [tool.pdm]
 distribution = false
+
+[tool.pdm.scripts]
+format.shell = "ruff format src tests && ruff check src tests --fix"
+lint.shell = "ruff check src tests"
+
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.mypy]
+files = ["src", "tests"]
+explicit_package_bases = true
+
+# See https://github.com/astral-sh/ruff#configuration
+[tool.ruff.lint]
+select = ["F", "E", "I001", "W", "N", "D"]
+ignore = ["D413"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "pep257"
+
+[tool.ruff]
+include = ["pyproject.toml", "src/**/*.py", "tests/**/*.py"]
+line-length = 120
+target-version = "py312"
