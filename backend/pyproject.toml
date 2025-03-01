@@ -5,7 +5,7 @@ description = "Default template for PDM package"
 authors = [
     {name = "carterwward", email = "Carter.Ward@uvm.edu"},
 ]
-dependencies = ["litestar>=2.15.1", "asyncpg>=0.30.0", "sqlalchemy>=2.0.38", "psycopg2>=2.9.10"]
+dependencies = ["litestar>=2.15.1", "asyncpg>=0.30.0", "sqlalchemy>=2.0.38", "psycopg2>=2.9.10", "uvicorn>=0.34.0"]
 requires-python = ">=3.11,<3.14"
 readme = "README.md"
 license = {text = "MIT"}
@@ -21,6 +21,7 @@ distribution = false
 [tool.pdm.scripts]
 format.shell = "ruff format src tests && ruff check src tests --fix"
 lint.shell = "ruff check src tests"
+app = "uvicorn app:app --reload"
 
 
 [tool.pytest.ini_options]
