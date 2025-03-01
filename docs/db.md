@@ -1,26 +1,59 @@
-# DB
+# Schema
 
-## Tables
+```mermaid
+erDiagram
+    USERS {
+        VARCHAR user_id PK
+        TIMESTAMP created_at
+        TIMESTAMP updated_at
+    }
 
-### Users
+    USER_TOURNAMENTS {
+        VARCHAR user_id FK
+        VARCHAR tournament_id
+        TIMESTAMP created_at
+        TIMESTAMP updated_at
+        PRIMARY KEY user_id tournament_id
+    }
 
-user_id (spotify login) | tournament_id | created_at | updated_at
+    TOURNAMENTS {
+        VARCHAR tournament_id
+        INTEGER round_id
+        VARCHAR tournament_type
+        TIMESTAMP created_at
+        TIMESTAMP updated_at
+        PRIMARY KEY tournament_id round_id
+    }
 
+    ROUND_SUBMISSIONS {
+        VARCHAR tournament_id FK
+        INTEGER round_id FK
+        VARCHAR user_id FK
+        VARCHAR submission
+        TIMESTAMP created_at
+        PRIMARY KEY tournament_id round_id user_id submission
+    }
 
-### Tournaments
+    ROUND_VOTES_UPDOWN {
+        VARCHAR tournament_id FK
+        INTEGER round_id FK
+        VARCHAR user_id FK
+        VARCHAR submission FK
+        INTEGER vote
+        TIMESTAMP created_at
+        TIMESTAMP updated_at
+        PRIMARY KEY tournament_id round_id user_id submission
+    }
 
-tournamnent_id | round | tournament_type | created_at | updated_at
+    ROUND_VOTES_RANKED {
+        VARCHAR tournament_id FK
+        INTEGER round_id FK
+        VARCHAR user_id FK
+        VARCHAR submission FK
+        INTEGER rank
+        TIMESTAMP created_at
+        TIMESTAMP updated_at
+        PRIMARY KEY tournament_id round_id user_id submission
+    }
 
-
-### Round Submissions (append only table)
-
-tournament_id | round_id | user_id | submission | created_at
-
-### Round Votes - upvote/downvote (append only table)
-
-tournament_id | round_id | user_id | submission | vote | created_at | updated
-
-
-### Round Votes - ranked choice (append only table)
-
-tournament_id | round_id | user_id | submission | rank | created_at | updated_at
+```
