@@ -3,6 +3,8 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+backend/.ruff_cache
+
 # C extensions
 *.so
 
@@ -169,3 +171,40 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# dependencies
+node_modules/
+
+# Expo
+.expo/
+dist/
+web-build/
+expo-env.d.ts
+
+# Native
+*.orig.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+
+# Metro
+.metro-health-check*
+
+# debug
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+
+# macOS
+.DS_Store
+*.pem
+
+# local env files
+.env*.local
+
+# typescript
+*.tsbuildinfo
+
+app-example
